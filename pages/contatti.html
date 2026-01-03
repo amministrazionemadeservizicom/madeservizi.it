@@ -491,7 +491,12 @@
 
                 <div class="contact-form">
                     <h2>Richiedi Info</h2>
-                    <form id="contactForm">
+                    <form id="contactForm" name="contatto" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+                        <input type="hidden" name="form-name" value="contatto">
+                        <input type="hidden" name="subject" value="Nuova richiesta dal sito MADE Servizi">
+                        <p style="display:none;">
+                            <label>Non compilare: <input name="bot-field"></label>
+                        </p>
                         <div class="form-group">
                             <label for="name">Nome e Cognome</label>
                             <input type="text" id="name" name="name" required>
@@ -597,11 +602,36 @@
             opacity: 0, x: 40, duration: 0.8, ease: 'power3.out'
         });
 
-        // Form submission
+        // Form submission with Netlify
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('Grazie per la tua richiesta! Ti contatteremo entro 24 ore.');
-            this.reset();
+            const form = this;
+            const formData = new FormData(form);
+            const btn = form.querySelector('.btn-submit');
+            const originalText = btn.textContent;
+            btn.textContent = 'Invio in corso...';
+            btn.disabled = true;
+
+            fetch('/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams(formData).toString()
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Grazie per la tua richiesta! Ti contatteremo entro 24 ore.');
+                    form.reset();
+                } else {
+                    alert('Si è verificato un errore. Riprova o contattaci via WhatsApp.');
+                }
+            })
+            .catch(() => {
+                alert('Si è verificato un errore. Riprova o contattaci via WhatsApp.');
+            })
+            .finally(() => {
+                btn.textContent = originalText;
+                btn.disabled = false;
+            });
         });
 
         // Mobile menu toggle
