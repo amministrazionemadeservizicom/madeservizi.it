@@ -986,6 +986,30 @@
                 // Update shader time
                 planet.material.uniforms.uTime.value = time;
 
+                // PULSING EFFECT - make planets throb like they're about to explode
+                if (!planet.exploding && !planet.reforming && hoveredPlanet !== planet.group) {
+                    // Each planet pulses at slightly different speed
+                    const pulseSpeed = 2 + i * 0.3;
+                    const pulse = Math.sin(time * pulseSpeed) * 0.5 + 0.5; // 0 to 1
+
+                    // Glow pulsing - gets brighter and dimmer
+                    planet.material.uniforms.uGlow.value = 2.0 + pulse * 1.5;
+
+                    // Scale pulsing - planets grow and shrink slightly
+                    const scale = 1 + pulse * 0.15;
+                    planet.group.scale.set(scale, scale, scale);
+
+                    // Also pulse the core and halo opacity
+                    const core = planet.group.children[1]; // core mesh
+                    const halo = planet.group.children[2]; // halo mesh
+                    if (core && core.material) {
+                        core.material.opacity = 0.25 + pulse * 0.2;
+                    }
+                    if (halo && halo.material) {
+                        halo.material.opacity = 0.1 + pulse * 0.15;
+                    }
+                }
+
                 if (planet.exploding && !planet.reforming) {
                     // Explosion phase
                     planet.explodeProgress += 0.08;
