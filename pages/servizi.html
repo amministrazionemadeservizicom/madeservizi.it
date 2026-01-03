@@ -989,24 +989,45 @@
                 // PULSING EFFECT - make planets throb like they're about to explode
                 if (!planet.exploding && !planet.reforming && hoveredPlanet !== planet.group) {
                     // Each planet pulses at slightly different speed
-                    const pulseSpeed = 2 + i * 0.3;
+                    const pulseSpeed = 3 + i * 0.4;
                     const pulse = Math.sin(time * pulseSpeed) * 0.5 + 0.5; // 0 to 1
+                    const fastPulse = Math.sin(time * pulseSpeed * 2) * 0.5 + 0.5; // faster pulse
 
-                    // Glow pulsing - gets brighter and dimmer
-                    planet.material.uniforms.uGlow.value = 2.0 + pulse * 1.5;
+                    // Glow pulsing - dramatic brightness changes
+                    planet.material.uniforms.uGlow.value = 2.5 + pulse * 2.5;
 
-                    // Scale pulsing - planets grow and shrink slightly
-                    const scale = 1 + pulse * 0.15;
+                    // Scale pulsing - planets grow and shrink more dramatically
+                    const scale = 1 + pulse * 0.25;
                     planet.group.scale.set(scale, scale, scale);
+
+                    // PARTICLE SPREADING - particles expand outward during pulse
+                    const positions = planet.geometry.attributes.position.array;
+                    const spreadFactor = 1 + fastPulse * 0.3; // particles spread 30% outward
+
+                    for (let j = 0; j < planet.originalPositions.length / 3; j++) {
+                        const ox = planet.originalPositions[j * 3];
+                        const oy = planet.originalPositions[j * 3 + 1];
+                        const oz = planet.originalPositions[j * 3 + 2];
+
+                        // Add some jitter/vibration for unstable effect
+                        const jitter = Math.sin(time * 10 + j) * 0.2;
+
+                        positions[j * 3] = ox * spreadFactor + jitter;
+                        positions[j * 3 + 1] = oy * spreadFactor + jitter;
+                        positions[j * 3 + 2] = oz * spreadFactor + jitter;
+                    }
+                    planet.geometry.attributes.position.needsUpdate = true;
 
                     // Also pulse the core and halo opacity
                     const core = planet.group.children[1]; // core mesh
                     const halo = planet.group.children[2]; // halo mesh
                     if (core && core.material) {
-                        core.material.opacity = 0.25 + pulse * 0.2;
+                        core.material.opacity = 0.3 + pulse * 0.4;
                     }
                     if (halo && halo.material) {
-                        halo.material.opacity = 0.1 + pulse * 0.15;
+                        halo.material.opacity = 0.15 + pulse * 0.25;
+                        // Halo also scales with pulse
+                        halo.scale.set(1 + pulse * 0.2, 1 + pulse * 0.2, 1 + pulse * 0.2);
                     }
                 }
 
