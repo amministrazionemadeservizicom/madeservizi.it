@@ -465,6 +465,18 @@
     </style>
 </head>
 <body>
+    <!-- Hidden form for Netlify detection -->
+    <form name="contatto" netlify netlify-honeypot="bot-field" hidden>
+        <input name="form-name" type="hidden" value="contatto">
+        <input name="subject" type="hidden">
+        <input name="bot-field">
+        <input name="name">
+        <input name="email">
+        <input name="phone">
+        <select name="service"></select>
+        <textarea name="message"></textarea>
+    </form>
+
     <!-- Loader -->
     <div id="loader">
         <div class="loader-text">MADE</div>
