@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contatti | MADE Servizi</title>
+    <meta name="description" content="Contatta MADE Servizi per una consulenza gratuita. Telefono, email, WhatsApp. Rispondiamo entro 24 ore.">
+    <link rel="canonical" href="https://madeservizi.it/pages/contatti.html">
+    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+    <meta name="theme-color" content="#0a0a0f">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0a0a0f;
+            --yellow: #F2C927;
+            --pink: #EC4899;
+            --cyan: #4ECDC4;
+            --orange: #FF6B35;
+            --purple: #A855F7;
+            --text: #ffffff;
+            --text-dim: rgba(255,255,255,0.6);
+            --card-bg: rgba(255,255,255,0.03);
+            --border: rgba(255,255,255,0.1);
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Stars Background */
+        #stars-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            height: 80px;
+        }
+        .logo img {
+            height: 55px;
+            width: auto;
+            filter: brightness(0) invert(1);
+            transition: transform 0.3s;
+        }
+        .logo:hover img { transform: scale(1.05); }
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 500;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            opacity: 0.7;
+            transition: all 0.3s;
+        }
+        .nav-links a:hover,
+        .nav-links a.active {
+            opacity: 1;
+            color: var(--yellow);
+        }
+        .nav-cta {
+            padding: 0.75rem 1.5rem;
+            background: var(--yellow);
+            color: var(--bg);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+        .nav-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(242, 201, 39, 0.4);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 200;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--text);
+            border-radius: 3px;
+            transition: 0.3s;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 6px);
+        }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -6px);
+        }
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(10, 10, 15, 0.98);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            z-index: 150;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.4s;
+        }
+        .mobile-menu.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .mobile-menu a {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: 0.3s;
+        }
+        .mobile-menu a:hover { color: var(--yellow); }
+
+        /* Hero Section */
+        .page-hero {
+            position: relative;
+            z-index: 1;
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10rem 2rem 4rem;
+            text-align: center;
+        }
+        .page-hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--yellow) 0%, var(--orange) 50%, var(--pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .page-hero p {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            position: relative;
+            z-index: 1;
+            padding: 2rem 2rem 6rem;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        /* Contact Info */
+        .contact-info h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 2rem;
+            color: var(--yellow);
+        }
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+            margin-bottom: 1.25rem;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            transition: all 0.3s;
+        }
+        .contact-item:hover {
+            border-color: var(--yellow);
+            transform: translateX(8px);
+            box-shadow: 0 0 30px rgba(242, 201, 39, 0.1);
+        }
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--yellow) 0%, var(--orange) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+        .contact-details h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.3rem;
+        }
+        .contact-details p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+        }
+        .contact-details a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .contact-details a:hover { color: var(--yellow); }
+
+        /* Quick Actions */
+        .quick-actions {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+        }
+        .quick-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s;
+        }
+        .quick-btn:hover {
+            border-color: var(--yellow);
+            transform: translateY(-4px);
+        }
+        .quick-btn.whatsapp {
+            background: #25D366;
+            border-color: #25D366;
+            color: white;
+        }
+        .quick-btn.whatsapp:hover {
+            background: #22c55e;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+        }
+
+        /* Contact Form */
+        .contact-form {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
+        }
+        .contact-form h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 2rem;
+            color: var(--cyan);
+        }
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        .form-group label {
+            display: block;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            color: var(--text-dim);
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'Space Grotesk', sans-serif;
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--text);
+            transition: all 0.3s;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--cyan);
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.2);
+        }
+        .form-group select { cursor: pointer; }
+        .form-group select option {
+            background: var(--bg);
+            color: var(--text);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        .btn-submit {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+            background: linear-gradient(135deg, var(--yellow) 0%, var(--orange) 100%);
+            color: var(--bg);
+        }
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(242, 201, 39, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 1;
+            padding: 3rem 2rem;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* WhatsApp Float */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            z-index: 999;
+            transition: all 0.3s;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+                height: 65px;
+            }
+            .logo img { height: 45px; }
+            .nav-links, .nav-cta { display: none; }
+            .hamburger { display: flex; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .quick-actions { flex-direction: column; }
+            .contact-form { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="stars-canvas"></canvas>
+
+    <nav>
+        <a href="../index.html" class="logo"><img src="../img/logo.svg" alt="MADE Servizi"></a>
+        <ul class="nav-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="servizi.html">Servizi</a></li>
+            <li><a href="chi-siamo.html">Chi Siamo</a></li>
+            <li><a href="lavora-con-noi.html">Lavora con Noi</a></li>
+            <li><a href="contatti.html" class="active">Contatti</a></li>
+        </ul>
+        <a href="contatti.html" class="nav-cta">Contattaci</a>
+        <div class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="../index.html">Home</a>
+        <a href="servizi.html">Servizi</a>
+        <a href="chi-siamo.html">Chi Siamo</a>
+        <a href="lavora-con-noi.html">Lavora con Noi</a>
+        <a href="contatti.html">Contatti</a>
+    </div>
+
+    <section class="page-hero">
+        <div>
+            <h1>Contattaci</h1>
+            <p>Richiedi la tua consulenza gratuita. Rispondiamo entro 24 ore.</p>
+        </div>
+    </section>
+
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2>Informazioni</h2>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-details">
+                            <h3>Telefono</h3>
+                            <p><a href="tel:+393295628882">+39 329 562 8882</a></p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div class="contact-details">
+                            <h3>Email</h3>
+                            <p><a href="mailto:info@madeservizi.it">info@madeservizi.it</a></p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">💬</div>
+                        <div class="contact-details">
+                            <h3>WhatsApp</h3>
+                            <p><a href="https://wa.me/393295628882" target="_blank">Chatta con noi</a></p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">🕐</div>
+                        <div class="contact-details">
+                            <h3>Orari</h3>
+                            <p>Lun - Ven: 9:00 - 18:00</p>
+                        </div>
+                    </div>
+
+                    <div class="quick-actions">
+                        <a href="tel:+393295628882" class="quick-btn">📞 Chiama</a>
+                        <a href="https://wa.me/393295628882" class="quick-btn whatsapp" target="_blank">💬 WhatsApp</a>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <h2>Richiedi Info</h2>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nome e Cognome</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Telefono</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="service">Servizio</label>
+                            <select id="service" name="service">
+                                <option value="">Seleziona un servizio</option>
+                                <option value="luce-gas">Luce e Gas</option>
+                                <option value="fotovoltaico">Fotovoltaico</option>
+                                <option value="telefonia">Telefonia</option>
+                                <option value="noleggio">Noleggio Auto</option>
+                                <option value="digital">Digital & Web</option>
+                                <option value="semplicom">Semplicom</option>
+                                <option value="altro">Altro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Messaggio</label>
+                            <textarea id="message" name="message" placeholder="Descrivi la tua richiesta..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit">Invia Richiesta</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2024 MADE Servizi. Tutti i diritti riservati.</p>
+    </footer>
+
+    <a href="https://wa.me/393295628882" class="whatsapp-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Stars Background
+        const canvas = document.getElementById('stars-canvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        const STAR_COUNT = 200;
+
+        function initStars() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            stars = [];
+            for (let i = 0; i < STAR_COUNT; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 2 + 0.5,
+                    opacity: Math.random() * 0.8 + 0.2,
+                    twinkleSpeed: Math.random() * 0.02 + 0.005,
+                    twinkleOffset: Math.random() * Math.PI * 2
+                });
+            }
+        }
+
+        function animateStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const time = Date.now() * 0.001;
+
+            stars.forEach(star => {
+                const twinkle = Math.sin(time * star.twinkleSpeed * 10 + star.twinkleOffset) * 0.3 + 0.7;
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity * twinkle})`;
+                ctx.fill();
+            });
+
+            requestAnimationFrame(animateStars);
+        }
+
+        initStars();
+        animateStars();
+        window.addEventListener('resize', initStars);
+
+        // Animations
+        gsap.from('.page-hero h1', { opacity: 0, y: 60, duration: 1, ease: 'power3.out' });
+        gsap.from('.page-hero p', { opacity: 0, y: 40, duration: 1, delay: 0.2, ease: 'power3.out' });
+
+        gsap.utils.toArray('.contact-item').forEach((item, i) => {
+            gsap.from(item, {
+                scrollTrigger: { trigger: item, start: 'top 90%' },
+                opacity: 0, x: -40, duration: 0.6, delay: i * 0.1, ease: 'power3.out'
+            });
+        });
+
+        gsap.from('.contact-form', {
+            scrollTrigger: { trigger: '.contact-form', start: 'top 80%' },
+            opacity: 0, x: 40, duration: 0.8, ease: 'power3.out'
+        });
+
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Grazie per la tua richiesta! Ti contatteremo entro 24 ore.');
+            this.reset();
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

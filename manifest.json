@@ -1,0 +1,78 @@
+{
+    "name": "MADE Servizi - Consulenza Energetica",
+    "short_name": "MADE Servizi",
+    "description": "Energy broker specializzato in consulenza energetica per famiglie, imprese e PA. Risparmio garantito su luce e gas.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#10b981",
+    "orientation": "portrait-primary",
+    "scope": "/",
+    "lang": "it-IT",
+    "categories": ["business", "utilities"],
+    "icons": [
+        {
+            "src": "img/icon-72.png",
+            "sizes": "72x72",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "img/icon-96.png",
+            "sizes": "96x96",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "img/icon-128.png",
+            "sizes": "128x128",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "img/icon-144.png",
+            "sizes": "144x144",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "img/icon-152.png",
+            "sizes": "152x152",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "img/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "img/icon-384.png",
+            "sizes": "384x384",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "img/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable any"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Richiedi Consulenza",
+            "short_name": "Consulenza",
+            "description": "Richiedi una consulenza energetica gratuita",
+            "url": "/#contatti",
+            "icons": [{ "src": "img/icon-96.png", "sizes": "96x96" }]
+        },
+        {
+            "name": "WhatsApp",
+            "short_name": "WhatsApp",
+            "description": "Contattaci su WhatsApp",
+            "url": "https://wa.me/393295628882"
+        }
+    ]
+}

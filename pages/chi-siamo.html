@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Siamo | MADE Servizi</title>
+    <meta name="description" content="Scopri MADE Servizi: consulenza energetica e digitale indipendente. La nostra missione è aiutarti a risparmiare e crescere.">
+    <link rel="canonical" href="https://madeservizi.it/pages/chi-siamo.html">
+    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+    <meta name="theme-color" content="#0a0a0f">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{--bg:#0a0a0f;--text:#fff;--text-dim:rgba(255,255,255,0.6);--yellow:#F2C927;--pink:#EC4899;--cyan:#4ECDC4;--orange:#FF6B35;--purple:#A855F7}
+        html{scroll-behavior:smooth}
+        body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
+
+        /* Stars */
+        #stars-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+
+        .content{position:relative;z-index:10}
+
+        /* Navigation */
+        nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 3rem;display:flex;justify-content:space-between;align-items:center;background:rgba(10,10,15,0.8);backdrop-filter:blur(20px);height:80px;border-bottom:1px solid rgba(255,255,255,0.05)}
+        .logo img{height:55px;width:auto;filter:brightness(0) invert(1);transition:transform 0.3s}
+        .logo:hover img{transform:scale(1.05)}
+        .nav-links{display:flex;gap:2.5rem;list-style:none}
+        .nav-links a{font-family:'Orbitron',sans-serif;color:var(--text-dim);text-decoration:none;font-size:0.85rem;font-weight:500;text-transform:uppercase;letter-spacing:0.1em;transition:0.3s}
+        .nav-links a:hover,.nav-links a.active{color:var(--yellow)}
+        .nav-cta{padding:0.75rem 1.5rem;background:var(--yellow);color:var(--bg);text-decoration:none;font-family:'Orbitron',sans-serif;font-weight:700;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.1em;border-radius:50px;transition:0.3s}
+        .nav-cta:hover{transform:scale(1.05);box-shadow:0 0 30px rgba(242,201,39,0.4)}
+
+        /* Hamburger */
+        .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:10px;z-index:200}
+        .hamburger span{width:25px;height:3px;background:var(--text);border-radius:3px;transition:0.3s}
+        .hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,6px)}
+        .hamburger.active span:nth-child(2){opacity:0}
+        .hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-6px)}
+
+        /* Mobile Menu */
+        .mobile-menu{position:fixed;top:0;left:0;width:100%;height:100vh;background:rgba(10,10,15,0.98);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;z-index:150;opacity:0;pointer-events:none;transition:0.4s}
+        .mobile-menu.active{opacity:1;pointer-events:auto}
+        .mobile-menu a{font-family:'Orbitron',sans-serif;font-size:1.5rem;color:var(--text);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;transition:0.3s}
+        .mobile-menu a:hover{color:var(--yellow)}
+
+        /* Hero */
+        .page-hero{min-height:60vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:10rem 2rem 5rem}
+        .page-hero h1{font-family:'Orbitron',sans-serif;font-size:clamp(2.5rem,7vw,4.5rem);font-weight:900;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:1.5rem}
+        .page-hero h1 span{color:var(--yellow);text-shadow:0 0 60px rgba(242,201,39,0.5)}
+        .page-hero p{font-size:1.2rem;color:var(--text-dim);max-width:600px;margin:0 auto;line-height:1.8}
+
+        /* Sections */
+        .section{padding:5rem 2rem}
+        .container{max-width:1100px;margin:0 auto}
+
+        .section-header{text-align:center;margin-bottom:4rem}
+        .section-header h2{font-family:'Orbitron',sans-serif;font-size:clamp(1.8rem,4vw,2.5rem);font-weight:800;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:1rem}
+        .section-header h2 span{color:var(--yellow)}
+        .section-header p{color:var(--text-dim);font-size:1.1rem}
+
+        /* About Grid */
+        .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-bottom:5rem}
+        .about-text h2{font-family:'Orbitron',sans-serif;font-size:1.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:1.5rem;color:var(--yellow)}
+        .about-text p{color:var(--text-dim);line-height:1.9;margin-bottom:1.25rem;font-size:1.05rem}
+        .about-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:24px;padding:3rem;text-align:center;transition:0.4s}
+        .about-card:hover{border-color:rgba(242,201,39,0.3);transform:translateY(-5px)}
+        .about-card-icon{font-size:4rem;margin-bottom:1.5rem}
+        .about-card h3{font-family:'Orbitron',sans-serif;font-size:1.2rem;font-weight:700;text-transform:uppercase;margin-bottom:0.75rem;color:var(--yellow)}
+        .about-card p{color:var(--text-dim);font-size:0.95rem}
+
+        /* Values */
+        .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+        .value-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:24px;padding:2.5rem;text-align:center;transition:0.4s;position:relative;overflow:hidden}
+        .value-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--yellow),var(--pink));transform:scaleX(0);transition:0.4s}
+        .value-card:hover{border-color:rgba(242,201,39,0.3);transform:translateY(-8px)}
+        .value-card:hover::before{transform:scaleX(1)}
+        .value-icon{width:80px;height:80px;background:linear-gradient(135deg,rgba(242,201,39,0.2),rgba(236,72,153,0.2));border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-size:2.5rem}
+        .value-card h3{font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.75rem;color:var(--yellow)}
+        .value-card p{color:var(--text-dim);font-size:0.95rem;line-height:1.7}
+
+        /* Stats */
+        .stats-section{background:rgba(255,255,255,0.02);border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);padding:5rem 2rem}
+        .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3rem;max-width:1000px;margin:0 auto;text-align:center}
+        .stat-item{animation:floatStat 4s ease-in-out infinite}
+        .stat-item:nth-child(1){animation-delay:0s}
+        .stat-item:nth-child(2){animation-delay:0.5s}
+        .stat-item:nth-child(3){animation-delay:1s}
+        .stat-item:nth-child(4){animation-delay:1.5s}
+        @keyframes floatStat{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+        .stat-num{font-family:'Orbitron',sans-serif;font-size:clamp(2.5rem,5vw,3.5rem);font-weight:900;background:linear-gradient(135deg,var(--yellow),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+        .stat-label{font-family:'Orbitron',sans-serif;color:var(--text-dim);font-size:0.75rem;font-weight:500;text-transform:uppercase;letter-spacing:0.15em;margin-top:0.75rem}
+
+        /* CTA */
+        .cta-section{padding:5rem 2rem;text-align:center}
+        .cta-box{background:linear-gradient(135deg,var(--yellow),#E5BC1F);padding:4rem;border-radius:32px;max-width:800px;margin:0 auto}
+        .cta-box h2{font-family:'Orbitron',sans-serif;font-size:clamp(1.5rem,4vw,2rem);font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--bg);margin-bottom:1rem}
+        .cta-box p{color:rgba(0,0,0,0.7);font-size:1.1rem;margin-bottom:2rem}
+        .btn{display:inline-flex;align-items:center;gap:0.5rem;padding:1rem 2.5rem;font-family:'Orbitron',sans-serif;font-size:0.9rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;border-radius:50px;text-decoration:none;transition:0.3s}
+        .btn-dark{background:var(--bg);color:var(--text)}
+        .btn-dark:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(0,0,0,0.4)}
+
+        /* Footer */
+        footer{padding:3rem 2rem;text-align:center;border-top:1px solid rgba(255,255,255,0.05)}
+        footer p{color:var(--text-dim);font-size:0.85rem}
+
+        /* WhatsApp */
+        .whatsapp-float{position:fixed;bottom:24px;right:24px;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;box-shadow:0 4px 20px rgba(37,211,102,0.4);z-index:999;transition:0.3s}
+        .whatsapp-float:hover{transform:scale(1.1)}
+
+        /* Responsive */
+        @media(max-width:1024px){.about-grid,.values-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(2,1fr)}}
+        @media(max-width:768px){
+            nav{padding:1rem 1.5rem;height:65px}
+            .logo img{height:45px}
+            .nav-links,.nav-cta{display:none}
+            .hamburger{display:flex}
+            .stats-grid{grid-template-columns:1fr 1fr}
+        }
+    </style>
+</head>
+<body>
+    <!-- Stars Canvas -->
+    <canvas id="stars-canvas"></canvas>
+
+    <div class="content">
+        <!-- Navigation -->
+        <nav>
+            <a href="../index.html" class="logo"><img src="../img/logo.svg" alt="MADE Servizi"></a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="servizi.html">Servizi</a></li>
+                <li><a href="chi-siamo.html" class="active">Chi Siamo</a></li>
+                <li><a href="lavora-con-noi.html">Lavora con Noi</a></li>
+                <li><a href="contatti.html">Contatti</a></li>
+            </ul>
+            <a href="contatti.html" class="nav-cta">Contattaci</a>
+            <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="../index.html">Home</a>
+            <a href="servizi.html">Servizi</a>
+            <a href="chi-siamo.html">Chi Siamo</a>
+            <a href="lavora-con-noi.html">Lavora con Noi</a>
+            <a href="contatti.html">Contatti</a>
+        </div>
+
+        <!-- Hero -->
+        <section class="page-hero">
+            <div>
+                <h1>Chi <span>Siamo</span></h1>
+                <p>Consulenza indipendente per energia e digitale. La nostra missione è aiutarti a risparmiare e crescere.</p>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section class="section">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-text">
+                        <h2>Il Tuo Partner per Energia e Digitale</h2>
+                        <p>MADE Servizi nasce dalla volontà di aiutare famiglie e imprese a ottimizzare i costi energetici e costruire una presenza digitale efficace.</p>
+                        <p>Come consulenti indipendenti, non siamo legati a nessun fornitore. Questo ci permette di offrirti sempre la soluzione migliore, confrontando tutte le opzioni in modo imparziale.</p>
+                        <p>La nostra consulenza è sempre gratuita e senza impegno. Lavoriamo per te.</p>
+                    </div>
+                    <div>
+                        <div class="about-card">
+                            <div class="about-card-icon">🎯</div>
+                            <h3>Indipendenza Totale</h3>
+                            <p>Nessun conflitto di interessi, solo il tuo vantaggio</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Values -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>I Nostri <span>Valori</span></h2>
+                </div>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <div class="value-icon">🛡️</div>
+                        <h3>Indipendenza</h3>
+                        <p>Non siamo legati a nessun fornitore. Lavoriamo esclusivamente per il tuo interesse.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">💎</div>
+                        <h3>Trasparenza</h3>
+                        <p>Zero costi nascosti, zero sorprese. La nostra consulenza è sempre gratuita.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">🤝</div>
+                        <h3>Assistenza</h3>
+                        <p>Ti seguiamo prima, durante e dopo. Sempre al tuo fianco per ogni necessità.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats -->
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-num">25K+</div>
+                    <div class="stat-label">Clienti Soddisfatti</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num">30%</div>
+                    <div class="stat-label">Risparmio Medio</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num">25+</div>
+                    <div class="stat-label">Partner</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num">17+</div>
+                    <div class="stat-label">Anni</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section">
+            <div class="cta-box">
+                <h2>Vuoi Conoscerci Meglio?</h2>
+                <p>Contattaci per una consulenza gratuita e scopri come possiamo aiutarti</p>
+                <a href="contatti.html" class="btn btn-dark">Contattaci Ora</a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>© 2024 MADE Servizi. Tutti i diritti riservati.</p>
+        </footer>
+    </div>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/393295628882" class="whatsapp-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+
+    <script>
+        // Stars Background
+        const canvas = document.getElementById('stars-canvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        const STAR_COUNT = 250;
+
+        function initStars() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            stars = [];
+            for (let i = 0; i < STAR_COUNT; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 2 + 0.5,
+                    opacity: Math.random() * 0.8 + 0.2,
+                    twinkleSpeed: Math.random() * 0.02 + 0.005
+                });
+            }
+        }
+
+        function drawStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const time = Date.now() * 0.001;
+            stars.forEach(star => {
+                const twinkle = Math.sin(time * star.twinkleSpeed * 10 + star.x) * 0.3 + 0.7;
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity * twinkle})`;
+                ctx.fill();
+            });
+            requestAnimationFrame(drawStars);
+        }
+
+        window.addEventListener('resize', initStars);
+        initStars();
+        drawStars();
+
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.from('.page-hero h1', {opacity:0, y:60, duration:1, ease:'power3.out'});
+        gsap.from('.page-hero p', {opacity:0, y:40, duration:1, delay:0.2, ease:'power3.out'});
+
+        gsap.from('.about-text', {
+            scrollTrigger: {trigger: '.about-grid', start: 'top 80%'},
+            opacity: 0, x: -60, duration: 1, ease: 'power3.out'
+        });
+        gsap.from('.about-card', {
+            scrollTrigger: {trigger: '.about-grid', start: 'top 80%'},
+            opacity: 0, x: 60, duration: 1, ease: 'power3.out'
+        });
+
+        gsap.utils.toArray('.value-card').forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {trigger: card, start: 'top 85%'},
+                opacity: 0, y: 60, duration: 0.8, delay: i * 0.15, ease: 'power3.out'
+            });
+        });
+
+        gsap.from('.stat-item', {
+            scrollTrigger: {trigger: '.stats-section', start: 'top 75%'},
+            opacity: 0, y: 30, duration: 0.6, stagger: 0.1, ease: 'power3.out'
+        });
+
+        gsap.from('.cta-box', {
+            scrollTrigger: {trigger: '.cta-section', start: 'top 80%'},
+            opacity: 0, scale: 0.95, duration: 0.8, ease: 'power3.out'
+        });
+
+        // Mobile Menu
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

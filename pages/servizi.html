@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>I Nostri Servizi | MADE Servizi - Energia, Fotovoltaico, Noleggi</title>
+    <meta name="description" content="Scopri tutti i servizi MADE: consulenza luce e gas, impianti fotovoltaici, noleggi operativi digitali, auto a lungo termine e telefonia. Risparmio garantito.">
+    <meta name="keywords" content="luce gas, fotovoltaico, noleggio auto, telefonia, risparmio bollette, energia rinnovabile, MADE servizi">
+    <meta name="author" content="MADE Servizi">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://madeservizi.it/pages/servizi.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="I Nostri Servizi | MADE Servizi">
+    <meta property="og:description" content="Energia, Fotovoltaico, Noleggi Digitali, Auto e Telefonia. Zero stress, risultati stellari.">
+    <meta property="og:url" content="https://madeservizi.it/pages/servizi.html">
+    <meta property="og:site_name" content="MADE Servizi">
+    <meta property="og:locale" content="it_IT">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="I Nostri Servizi | MADE Servizi">
+    <meta name="twitter:description" content="Energia, Fotovoltaico, Noleggi Digitali, Auto e Telefonia.">
+
+    <!-- Favicon & Icons -->
+    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+    <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+    <meta name="theme-color" content="#F2C927">
+    <meta name="msapplication-TileColor" content="#F2C927">
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" as="style">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{--bg:#0a0a0a;--text:#fff;--text-dim:rgba(255,255,255,0.6);--yellow:#F2C927;--pink:#EC4899}
+        body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+
+        #webgl{position:fixed;inset:0;z-index:1}
+        .content{position:relative;z-index:10}
+
+        nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0.5rem 3rem;display:flex;justify-content:space-between;align-items:center;background:rgba(10,10,10,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);height:70px}
+        .logo{display:flex;align-items:center}
+        .logo img{height:80px;width:auto;filter:brightness(0) invert(1);transition:transform 0.3s}
+        .logo:hover img{transform:scale(1.05)}
+        .nav-links{display:flex;gap:2.5rem;list-style:none}
+        .nav-links a{color:var(--text-dim);text-decoration:none;font-weight:600;transition:0.3s}
+        .nav-links a:hover{color:var(--yellow)}
+        .nav-cta{padding:0.75rem 1.5rem;background:var(--yellow);color:var(--bg);text-decoration:none;font-weight:700;border-radius:50px}
+
+        .page-hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;perspective:1000px}
+        .hero-content{transform-style:preserve-3d}
+        .page-hero h1{
+            font-size:clamp(3rem,10vw,7rem);
+            font-weight:700;
+            margin-bottom:1rem;
+            background:linear-gradient(135deg,var(--yellow) 0%,var(--pink) 100%);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+            opacity:0;
+            transform:translateZ(-500px) scale(0.5);
+        }
+        .page-hero p{
+            font-size:1.4rem;
+            color:var(--text-dim);
+            max-width:600px;
+            margin:0 auto;
+            opacity:0;
+            transform:translateY(50px);
+        }
+        .scroll-indicator{
+            position:absolute;
+            bottom:3rem;
+            left:50%;
+            transform:translateX(-50%);
+            color:var(--text-dim);
+            font-size:0.8rem;
+            letter-spacing:0.2em;
+            text-transform:uppercase;
+            opacity:0;
+            animation:bounce 2s infinite;
+        }
+        @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(10px)}}
+
+        .services-section{
+            min-height:200vh;
+            position:relative;
+            perspective:1500px;
+        }
+
+        /* 3D Labels for planets */
+        .planet-labels{
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            pointer-events:none;
+            z-index:25;
+        }
+        .planet-label-3d{
+            position:absolute;
+            padding:0.8rem 1.5rem;
+            background:rgba(0,0,0,0.7);
+            border:1px solid rgba(255,255,255,0.2);
+            border-radius:12px;
+            color:#fff;
+            font-family:inherit;
+            font-weight:600;
+            font-size:0.9rem;
+            white-space:nowrap;
+            pointer-events:auto;
+            cursor:pointer;
+            opacity:0;
+            transform:translateY(10px);
+            transition:all 0.3s;
+            backdrop-filter:blur(10px);
+            -webkit-backdrop-filter:blur(10px);
+        }
+        .planet-label-3d.visible{
+            opacity:1;
+            transform:translateY(0);
+        }
+        .planet-label-3d:hover{
+            background:rgba(242,201,39,0.3);
+            border-color:var(--yellow);
+            transform:scale(1.1);
+        }
+        .planet-label-3d span{
+            display:block;
+            font-size:0.7rem;
+            opacity:0.6;
+            margin-top:0.2rem;
+        }
+
+        /* Service card modal in space - 3D space background */
+        .space-card{
+            position:fixed;
+            top:50%;
+            left:50%;
+            transform:translate(-50%,-50%) perspective(1000px) rotateX(10deg) scale(0.8);
+            width:90%;
+            max-width:800px;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(242,201,39,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(236,72,153,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(10,10,20,0.95) 0%, rgba(5,5,15,0.98) 100%);
+            border:1px solid rgba(242,201,39,0.3);
+            border-radius:30px;
+            padding:4rem 3rem;
+            z-index:200;
+            opacity:0;
+            pointer-events:none;
+            transition:all 0.8s cubic-bezier(0.16,1,0.3,1);
+            text-align:center;
+            box-shadow:
+                0 0 80px rgba(242,201,39,0.2),
+                0 0 120px rgba(236,72,153,0.1),
+                inset 0 0 100px rgba(0,0,0,0.5);
+            overflow:hidden;
+        }
+        .space-card::before{
+            content:'';
+            position:absolute;
+            top:0;left:0;right:0;bottom:0;
+            background-image:
+                radial-gradient(1px 1px at 20px 30px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 40px 70px, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1px 1px at 50px 160px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(242,201,39,0.7), transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.4), transparent),
+                radial-gradient(1px 1px at 160px 120px, rgba(236,72,153,0.6), transparent),
+                radial-gradient(2px 2px at 200px 50px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(1px 1px at 250px 180px, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1px 1px at 300px 90px, rgba(242,201,39,0.5), transparent),
+                radial-gradient(1px 1px at 350px 150px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(2px 2px at 400px 60px, rgba(236,72,153,0.7), transparent),
+                radial-gradient(1px 1px at 450px 200px, rgba(255,255,255,0.4), transparent);
+            background-size:500px 300px;
+            animation:starsMove 20s linear infinite;
+            pointer-events:none;
+            z-index:-1;
+            border-radius:30px;
+        }
+        @keyframes starsMove{
+            from{background-position:0 0}
+            to{background-position:500px 300px}
+        }
+        .space-card.active{
+            opacity:1;
+            pointer-events:auto;
+            transform:translate(-50%,-50%) perspective(1000px) rotateX(0deg) scale(1);
+        }
+        .space-card-close{
+            position:fixed;
+            top:2rem;
+            right:2rem;
+            width:50px;
+            height:50px;
+            border:2px solid var(--yellow);
+            border-radius:50%;
+            background:rgba(0,0,0,0.7);
+            color:var(--yellow);
+            font-size:1.8rem;
+            cursor:pointer;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            transition:all 0.3s;
+            z-index:210;
+        }
+        .space-card-close:hover{background:var(--yellow);color:var(--bg);transform:scale(1.1)}
+        .space-card-icon{display:none}
+        #card-semplicom .space-card-icon{display:block;margin-bottom:1.5rem}
+        .space-card h2{
+            font-family:'Orbitron',sans-serif;
+            font-size:clamp(2.5rem,8vw,4.5rem);
+            font-weight:900;
+            margin-bottom:1.5rem;
+            color:var(--yellow);
+            text-transform:uppercase;
+            letter-spacing:0.1em;
+            text-shadow:0 0 30px rgba(242,201,39,0.8), 0 0 60px rgba(242,201,39,0.5);
+        }
+        .space-card p{
+            font-family:'Orbitron',sans-serif;
+            color:#ffffff;
+            font-size:clamp(0.9rem,2vw,1.2rem);
+            line-height:1.9;
+            margin-bottom:2.5rem;
+            letter-spacing:0.02em;
+            text-shadow:0 2px 10px rgba(0,0,0,0.8);
+        }
+        .space-card .btn{
+            font-family:'Orbitron',sans-serif;
+            display:inline-flex;
+            padding:1.2rem 3rem;
+            background:linear-gradient(135deg,var(--yellow),var(--pink));
+            color:#000;
+            text-decoration:none;
+            font-weight:700;
+            font-size:1rem;
+            border-radius:50px;
+            letter-spacing:0.08em;
+            text-transform:uppercase;
+            box-shadow:0 0 40px rgba(242,201,39,0.5);
+            transition:all 0.3s;
+        }
+        .space-card .btn:hover{
+            transform:scale(1.1);
+            box-shadow:0 0 60px rgba(242,201,39,0.8);
+        }
+
+        /* Warp speed effect */
+        .warp-overlay{
+            position:fixed;
+            inset:0;
+            z-index:150;
+            pointer-events:none;
+            opacity:0;
+            transition:opacity 0.3s;
+        }
+        .warp-overlay.active{opacity:1}
+        .warp-line{
+            position:absolute;
+            width:2px;
+            background:linear-gradient(to bottom,transparent,var(--yellow),var(--pink),transparent);
+            animation:warpSpeed 0.6s ease-in forwards;
+        }
+        @keyframes warpSpeed{
+            from{height:0;top:50%;opacity:1}
+            to{height:100vh;top:-50%;opacity:0}
+        }
+
+        .cta-section{
+            padding:10rem 2rem;
+            text-align:center;
+            position:relative;
+        }
+        .cta-section h2{
+            font-size:clamp(2.5rem,6vw,4.5rem);
+            font-weight:700;
+            margin-bottom:1.5rem;
+            opacity:0;
+            transform:translateY(50px);
+        }
+        .cta-section p{
+            color:var(--text-dim);
+            font-size:1.3rem;
+            margin-bottom:3rem;
+            opacity:0;
+            transform:translateY(30px);
+        }
+        .btn{
+            display:inline-flex;
+            padding:1.3rem 3.5rem;
+            background:linear-gradient(135deg,var(--yellow),var(--pink));
+            color:var(--bg);
+            text-decoration:none;
+            font-weight:700;
+            font-size:1.2rem;
+            border-radius:60px;
+            transition:all 0.4s;
+            opacity:0;
+            transform:translateY(30px);
+        }
+        .btn:hover{transform:translateY(-8px) scale(1.05);box-shadow:0 30px 60px rgba(242,201,39,0.4)}
+
+        footer{padding:3rem;text-align:center;color:var(--text-dim);font-size:0.9rem;border-top:1px solid rgba(255,255,255,0.05)}
+
+        /* Floating SEO keywords */
+        .floating-keywords{
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            pointer-events:none;
+            z-index:5;
+            overflow:hidden;
+        }
+        .seo-word{
+            position:absolute;
+            font-family:'Orbitron',sans-serif;
+            font-weight:700;
+            text-transform:uppercase;
+            letter-spacing:0.1em;
+            opacity:0;
+            white-space:nowrap;
+            text-shadow:0 0 30px currentColor;
+            transition:opacity 0.5s;
+        }
+        .seo-word.visible{opacity:0.6}
+        .seo-word.yellow{color:var(--yellow)}
+        .seo-word.pink{color:var(--pink)}
+        .seo-word.orange{color:#FF6B35}
+        .seo-word.cyan{color:#4ECDC4}
+        .seo-word.purple{color:#A855F7}
+
+        @media(max-width:900px){
+            nav{padding:0.5rem 1.5rem}
+            .nav-links{gap:1.5rem}
+        }
+        /* Hamburger menu */
+        .hamburger{
+            display:none;
+            flex-direction:column;
+            gap:5px;
+            cursor:pointer;
+            padding:10px;
+            z-index:200;
+        }
+        .hamburger span{
+            width:25px;
+            height:3px;
+            background:var(--yellow);
+            border-radius:3px;
+            transition:0.3s;
+        }
+        .hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,6px)}
+        .hamburger.active span:nth-child(2){opacity:0}
+        .hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-6px)}
+
+        .mobile-menu{
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100vh;
+            background:rgba(10,10,15,0.98);
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            gap:2rem;
+            z-index:150;
+            opacity:0;
+            pointer-events:none;
+            transition:0.4s;
+        }
+        .mobile-menu.active{
+            opacity:1;
+            pointer-events:auto;
+        }
+        .mobile-menu a{
+            font-family:'Orbitron',sans-serif;
+            font-size:1.5rem;
+            color:#fff;
+            text-decoration:none;
+            text-transform:uppercase;
+            letter-spacing:0.1em;
+            transition:0.3s;
+        }
+        .mobile-menu a:hover{color:var(--yellow)}
+
+        @media(max-width:768px){
+            nav{padding:0.5rem 1rem;height:60px}
+            .logo img{height:70px}
+            .nav-links{display:none}
+            .hamburger{display:flex}
+            .nav-cta{display:none}
+            .page-hero{padding:8rem 1.5rem 3rem}
+            .page-hero h1{font-size:clamp(2rem,8vw,4rem)}
+            .page-hero p{font-size:1.1rem}
+            .planet-label-3d{padding:0.6rem 1rem;font-size:0.8rem}
+            .space-card{padding:2rem;margin:1rem}
+            .space-card h2{font-size:1.5rem}
+            .space-card p{font-size:1rem}
+            .space-card .btn{padding:0.8rem 2rem;font-size:1rem}
+            .cta-section{padding:6rem 1.5rem}
+            .cta-section h2{font-size:clamp(1.8rem,5vw,3rem)}
+            footer{padding:2rem 1rem}
+        }
+        @media(max-width:480px){
+            .page-hero h1{font-size:2rem}
+            .space-card{border-radius:20px}
+            .space-card-icon{font-size:3rem}
+        }
+        /* Accessibility */
+        @media(prefers-reduced-motion:reduce){
+            *{animation:none !important;transition:none !important}
+        }
+        /* Focus styles for accessibility */
+        a:focus-visible,.btn:focus-visible,button:focus-visible{
+            outline:3px solid var(--yellow);
+            outline-offset:3px;
+        }
+        /* Skip link for accessibility */
+        .skip-link{
+            position:absolute;
+            top:-100px;
+            left:50%;
+            transform:translateX(-50%);
+            padding:1rem 2rem;
+            background:var(--yellow);
+            color:var(--bg);
+            font-weight:700;
+            border-radius:8px;
+            z-index:1000;
+            transition:top 0.3s;
+        }
+        .skip-link:focus{top:10px}
+    </style>
+</head>
+<body>
+    <!-- Skip link for accessibility -->
+    <a href="#main-content" class="skip-link">Vai al contenuto principale</a>
+
+    <canvas id="webgl" aria-hidden="true"></canvas>
+
+    <!-- Floating SEO Keywords -->
+    <div class="floating-keywords" id="floatingKeywords" aria-hidden="true">
+        <span class="seo-word yellow" style="font-size:1.8rem">Risparmio Bollette</span>
+        <span class="seo-word pink" style="font-size:1.4rem">Energia Verde</span>
+        <span class="seo-word orange" style="font-size:1.6rem">Fotovoltaico</span>
+        <span class="seo-word cyan" style="font-size:1.3rem">Consulenza Gratuita</span>
+        <span class="seo-word purple" style="font-size:1.5rem">Zero Pensieri</span>
+        <span class="seo-word yellow" style="font-size:1.2rem">Noleggio Auto</span>
+        <span class="seo-word pink" style="font-size:1.7rem">Fibra Veloce</span>
+        <span class="seo-word orange" style="font-size:1.4rem">Luce e Gas</span>
+        <span class="seo-word cyan" style="font-size:1.6rem">Canone Fisso</span>
+        <span class="seo-word purple" style="font-size:1.3rem">Assistenza Dedicata</span>
+        <span class="seo-word yellow" style="font-size:1.5rem">Pannelli Solari</span>
+        <span class="seo-word pink" style="font-size:1.2rem">Telefonia Business</span>
+        <span class="seo-word orange" style="font-size:1.8rem">Tutto Incluso</span>
+        <span class="seo-word cyan" style="font-size:1.4rem">Preventivo Gratis</span>
+        <span class="seo-word purple" style="font-size:1.6rem">Energia Pulita</span>
+        <span class="seo-word yellow" style="font-size:1.3rem">Risparmio Garantito</span>
+    </div>
+
+    <div class="content">
+        <header>
+            <nav role="navigation" aria-label="Menu principale">
+                <a href="../index.html" class="logo" aria-label="MADE Servizi - Torna alla home">
+                    <img src="../img/logo.svg" alt="MADE Servizi Logo" width="90" height="90">
+                </a>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="servizi.html" aria-current="page">Servizi</a></li>
+                    <li><a href="chi-siamo.html">Chi Siamo</a></li>
+                    <li><a href="lavora-con-noi.html">Lavora con Noi</a></li>
+                    <li><a href="contatti.html">Contatti</a></li>
+                </ul>
+                <a href="contatti.html" class="nav-cta" aria-label="Contattaci per una consulenza">Contattaci</a>
+                <div class="hamburger" id="hamburger" aria-label="Apri menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="../index.html">Home</a>
+            <a href="servizi.html">Servizi</a>
+            <a href="chi-siamo.html">Chi Siamo</a>
+            <a href="lavora-con-noi.html">Lavora con Noi</a>
+            <a href="contatti.html">Contatti</a>
+        </div>
+
+        <main id="main-content">
+            <section class="page-hero" aria-labelledby="hero-title">
+                <div class="hero-content">
+                    <h1 id="hero-title">I Nostri Servizi</h1>
+                    <p>Esplora le nostre soluzioni. Zero stress, risultati stellari.</p>
+                </div>
+                <div class="scroll-indicator" aria-hidden="true">Scorri per esplorare ↓</div>
+            </section>
+
+            <section class="services-section" aria-label="Servizi disponibili"></section>
+
+        <!-- 3D Labels that follow planets -->
+        <div class="planet-labels" id="planetLabels" role="navigation" aria-label="Servizi disponibili">
+            <button class="planet-label-3d" data-service="luce-gas" type="button" aria-label="Apri dettagli Luce e Gas">Energia<span>Luce e Gas</span></button>
+            <button class="planet-label-3d" data-service="fotovoltaico" type="button" aria-label="Apri dettagli Fotovoltaico">Solare<span>Fotovoltaico</span></button>
+            <button class="planet-label-3d" data-service="digital" type="button" aria-label="Apri dettagli Digital e Noleggi">Tecnologia<span>Digital & Noleggi</span></button>
+            <button class="planet-label-3d" data-service="noleggio-auto" type="button" aria-label="Apri dettagli Noleggio Auto">Mobilità<span>Noleggio Auto</span></button>
+            <button class="planet-label-3d" data-service="telefonia" type="button" aria-label="Apri dettagli Telefonia">Connessioni<span>Telefonia</span></button>
+            <button class="planet-label-3d" data-service="semplicom" type="button" aria-label="Apri dettagli Semplicom">Semplicom<span>Suite Operativa</span></button>
+        </div>
+
+        <!-- Warp effect overlay -->
+        <div class="warp-overlay" id="warpOverlay"></div>
+
+        <!-- Space cards for each service - Accessible modals -->
+        <article class="space-card" id="card-luce-gas" role="dialog" aria-labelledby="title-luce-gas" aria-modal="true">
+            <button class="space-card-close" aria-label="Chiudi finestra">×</button>
+            <div class="space-card-icon" aria-hidden="true">⚡</div>
+            <h2 id="title-luce-gas">Specialist Energia e Gas</h2>
+            <p>Non solo offerte: ti seguiamo in tutto, dalla scelta della tariffa alla gestione delle pratiche luce e gas: switch, voltura, subentro e prima attivazione/allaccio. Analisi bolletta gratuita, tempi chiari e un consulente dedicato.</p>
+            <a href="contatti.html" class="btn">Richiedi Consulenza</a>
+        </article>
+
+        <article class="space-card" id="card-fotovoltaico" role="dialog" aria-labelledby="title-fotovoltaico" aria-modal="true">
+            <button class="space-card-close" aria-label="Chiudi finestra">×</button>
+            <div class="space-card-icon" aria-hidden="true">☀️</div>
+            <h2 id="title-fotovoltaico">Fotovoltaico & Accumulo</h2>
+            <p>Fotovoltaico con accumulo per casa e aziende. Ti seguiamo dalla consulenza al montaggio: sopralluogo, progettazione e pratiche per incentivi. Produci energia pulita e riduci i costi in bolletta.</p>
+            <a href="contatti.html" class="btn">Richiedi Preventivo</a>
+        </article>
+
+        <article class="space-card" id="card-digital" role="dialog" aria-labelledby="title-digital" aria-modal="true">
+            <button class="space-card-close" aria-label="Chiudi finestra">×</button>
+            <div class="space-card-icon" aria-hidden="true">💻</div>
+            <h2 id="title-digital">Noleggi Digitali per Aziende</h2>
+            <p>Noleggio operativo per aziende di stampanti, smartphone, PC e dispositivi smart. Canone fisso mensile, zero investimento iniziale e assistenza inclusa. Gestiamo noi attivazione, sostituzioni e supporto.</p>
+            <a href="contatti.html" class="btn">Scopri le Offerte</a>
+        </article>
+
+        <article class="space-card" id="card-noleggio-auto" role="dialog" aria-labelledby="title-noleggio-auto" aria-modal="true">
+            <button class="space-card-close" aria-label="Chiudi finestra">×</button>
+            <div class="space-card-icon" aria-hidden="true">🚗</div>
+            <h2 id="title-noleggio-auto">Noleggio Auto</h2>
+            <p>Per privati e aziende. Ti seguiamo noi: scelta modello, preventivo e gestione pratica. Canone fisso mensile tutto incluso: assicurazione, manutenzione e bollo.</p>
+            <a href="contatti.html" class="btn">Richiedi Preventivo</a>
+        </article>
+
+        <article class="space-card" id="card-telefonia" role="dialog" aria-labelledby="title-telefonia" aria-modal="true">
+            <button class="space-card-close" aria-label="Chiudi finestra">×</button>
+            <div class="space-card-icon" aria-hidden="true">📱</div>
+            <h2 id="title-telefonia">Connessioni & Telco</h2>
+            <p>Soluzioni fibra e mobile per privati e aziende: internet casa/ufficio, linee voce e SIM business. Confrontiamo le migliori offerte e gestiamo attivazione, portabilità e assistenza.</p>
+            <a href="contatti.html" class="btn">Confronta Offerte</a>
+        </article>
+
+        <article class="space-card" id="card-semplicom" role="dialog" aria-labelledby="title-semplicom" aria-modal="true">
+            <button class="space-card-close" aria-label="Chiudi finestra">×</button>
+            <div class="space-card-icon" aria-hidden="true"><img src="../img/semplicom-logo.svg" alt="Semplicom" style="height:80px"></div>
+            <h2 id="title-semplicom">Semplicom</h2>
+            <p>La suite operativa per consulenti e reti vendita. Gestisci offerte, pratiche e documenti con flussi intelligenti automatizzati in un unico ambiente.</p>
+            <a href="https://semplicom.it" class="btn">Scopri Semplicom</a>
+        </article>
+
+            <section class="cta-section" aria-labelledby="cta-title">
+                <h2 id="cta-title">Pronto a Partire?</h2>
+                <p>Contattaci per una consulenza gratuita e scopri la soluzione perfetta per te.</p>
+                <a href="contatti.html" class="btn" aria-label="Inizia il viaggio con una consulenza gratuita">Inizia il Viaggio</a>
+            </section>
+        </main>
+
+        <footer role="contentinfo">
+            <p>© 2024 MADE Servizi. Tutti i diritti riservati. | <a href="contatti.html" style="color:var(--yellow)">Contatti</a></p>
+        </footer>
+    </div>
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "MADE Servizi",
+        "description": "Agenzia di servizi per energia, fotovoltaico, noleggi e telefonia",
+        "url": "https://madeservizi.it",
+        "serviceType": ["Consulenza Luce e Gas", "Impianti Fotovoltaici", "Noleggio Auto", "Telefonia", "Noleggi Operativi"],
+        "areaServed": "Italia"
+    }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script>
+        // CINEMATIC 3D SPACE SCENE - Optimized for Core Web Vitals
+        let scene, camera, renderer, clock;
+        let stars;
+        let servicePlanets = [];
+        let mouseX = 0, mouseY = 0;
+        let scrollY = 0;
+        let raycaster, mouse;
+        let hoveredPlanet = null;
+        let planetsVisible = false;
+
+        const warpOverlay = document.getElementById('warpOverlay');
+        const labels = document.querySelectorAll('.planet-label-3d');
+        let currentOpenCard = null;
+
+        // Service data - planets orbit WIDE and SEPARATED, evenly distributed
+        const servicesData = [
+            { id: 'luce-gas', name: 'Energia', color: 0xF2C927, emissive: 0x886600, orbitRadius: 70, orbitSpeed: 0.08, orbitOffset: 0, yOffset: 30 },
+            { id: 'fotovoltaico', name: 'Solare', color: 0xFF6B35, emissive: 0x993300, orbitRadius: 90, orbitSpeed: 0.06, orbitOffset: Math.PI * 0.33, yOffset: -25 },
+            { id: 'digital', name: 'Tech', color: 0x4ECDC4, emissive: 0x1a6666, orbitRadius: 110, orbitSpeed: 0.05, orbitOffset: Math.PI * 0.66, yOffset: 35 },
+            { id: 'noleggio-auto', name: 'Mobilità', color: 0xA855F7, emissive: 0x4a1a7a, orbitRadius: 80, orbitSpeed: 0.07, orbitOffset: Math.PI * 1.0, yOffset: -30 },
+            { id: 'telefonia', name: 'Network', color: 0xEC4899, emissive: 0x7a1a4a, orbitRadius: 100, orbitSpeed: 0.055, orbitOffset: Math.PI * 1.33, yOffset: 25 },
+            { id: 'semplicom', name: 'Semplicom', color: 0xE85D04, emissive: 0x8B3A00, orbitRadius: 95, orbitSpeed: 0.045, orbitOffset: Math.PI * 1.66, yOffset: -20 }
+        ];
+
+        // Explosion particles system
+        let explosionParticles = null;
+
+        function init() {
+            scene = new THREE.Scene();
+            clock = new THREE.Clock();
+
+            // Cinematic camera with depth
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 2000);
+            camera.position.z = 80;
+
+            renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('webgl'), antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setClearColor(0x050508, 1);
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.2;
+
+            // Raycaster for mouse interaction
+            raycaster = new THREE.Raycaster();
+            mouse = new THREE.Vector2();
+
+            // Ambient light
+            const ambient = new THREE.AmbientLight(0x222233, 0.5);
+            scene.add(ambient);
+
+            // Main light from camera
+            const mainLight = new THREE.PointLight(0xffffff, 1, 500);
+            mainLight.position.set(0, 0, 100);
+            scene.add(mainLight);
+
+            createStarField();
+            createServicePlanets();
+
+            window.addEventListener('resize', onResize);
+            window.addEventListener('mousemove', onMouseMove);
+            window.addEventListener('click', onClick);
+            window.addEventListener('scroll', () => { scrollY = window.scrollY; });
+
+            animate();
+            initGSAP();
+        }
+
+        // Hyperspace stars
+        let hyperStars = [];
+        let hyperspaceActive = false;
+
+        function createStarField() {
+            // Dense star field with depth layers
+            const layers = [
+                { count: 3000, size: 0.3, depth: 500 },
+                { count: 2000, size: 0.6, depth: 300 },
+                { count: 500, size: 1.2, depth: 150 }
+            ];
+
+            layers.forEach(layer => {
+                const positions = new Float32Array(layer.count * 3);
+                const colors = new Float32Array(layer.count * 3);
+                const originalZ = new Float32Array(layer.count);
+
+                for (let i = 0; i < layer.count; i++) {
+                    positions[i * 3] = (Math.random() - 0.5) * 600;
+                    positions[i * 3 + 1] = (Math.random() - 0.5) * 400;
+                    positions[i * 3 + 2] = -Math.random() * layer.depth - 50;
+                    originalZ[i] = positions[i * 3 + 2];
+
+                    const brightness = 0.4 + Math.random() * 0.6;
+                    const temp = Math.random();
+                    if (temp > 0.8) {
+                        colors[i * 3] = 1 * brightness;
+                        colors[i * 3 + 1] = 0.9 * brightness;
+                        colors[i * 3 + 2] = 0.5 * brightness;
+                    } else if (temp > 0.6) {
+                        colors[i * 3] = 0.9 * brightness;
+                        colors[i * 3 + 1] = 0.5 * brightness;
+                        colors[i * 3 + 2] = 0.9 * brightness;
+                    } else {
+                        colors[i * 3] = brightness;
+                        colors[i * 3 + 1] = brightness;
+                        colors[i * 3 + 2] = brightness * 1.1;
+                    }
+                }
+
+                const geo = new THREE.BufferGeometry();
+                geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+                const mat = new THREE.PointsMaterial({
+                    size: layer.size,
+                    vertexColors: true,
+                    transparent: true,
+                    opacity: 0.8,
+                    sizeAttenuation: true
+                });
+
+                const starLayer = new THREE.Points(geo, mat);
+                starLayer.userData.originalZ = originalZ;
+                starLayer.userData.baseSize = layer.size;
+                scene.add(starLayer);
+                hyperStars.push(starLayer);
+            });
+        }
+
+        // Hyperspace warp effect
+        function activateHyperspace() {
+            hyperspaceActive = true;
+
+            hyperStars.forEach(starLayer => {
+                const positions = starLayer.geometry.attributes.position.array;
+                const originalZ = starLayer.userData.originalZ;
+
+                // Animate stars rushing towards camera
+                gsap.to({ progress: 0 }, {
+                    progress: 1,
+                    duration: 1.2,
+                    ease: 'power2.in',
+                    onUpdate: function() {
+                        const p = this.targets()[0].progress;
+                        for (let i = 0; i < originalZ.length; i++) {
+                            // Stars fly towards and past the camera
+                            positions[i * 3 + 2] = originalZ[i] + p * 600;
+                            if (positions[i * 3 + 2] > 100) {
+                                positions[i * 3 + 2] = originalZ[i];
+                            }
+                        }
+                        starLayer.geometry.attributes.position.needsUpdate = true;
+                        // Increase star size during warp
+                        starLayer.material.size = starLayer.userData.baseSize * (1 + p * 8);
+                    },
+                    onComplete: () => {
+                        hyperspaceActive = false;
+                        starLayer.material.size = starLayer.userData.baseSize;
+                    }
+                });
+            });
+        }
+
+        // Particle planets data
+        let particlePlanets = [];
+
+        function createServicePlanets() {
+            servicesData.forEach((service, index) => {
+                const planetData = createParticlePlanet(service, index);
+                particlePlanets.push(planetData);
+                servicePlanets.push(planetData.group);
+            });
+        }
+
+        function createParticlePlanet(service, index) {
+            const group = new THREE.Group();
+            group.userData = { service: service, index: index };
+
+            const particleCount = 1000;
+            // Bigger planets on desktop
+            const radius = window.innerWidth > 768 ? 8 : 5;
+
+            // Create positions on sphere surface
+            const positions = new Float32Array(particleCount * 3);
+            const originalPositions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+            const sizes = new Float32Array(particleCount);
+
+            const color = new THREE.Color(service.color).multiplyScalar(1.3);
+            const brightColor = new THREE.Color(service.color).multiplyScalar(2.0);
+
+            for (let i = 0; i < particleCount; i++) {
+                // Fibonacci sphere distribution for even spacing
+                const phi = Math.acos(1 - 2 * (i + 0.5) / particleCount);
+                const theta = Math.PI * (1 + Math.sqrt(5)) * i;
+
+                const x = radius * Math.sin(phi) * Math.cos(theta);
+                const y = radius * Math.sin(phi) * Math.sin(theta);
+                const z = radius * Math.cos(phi);
+
+                positions[i * 3] = x;
+                positions[i * 3 + 1] = y;
+                positions[i * 3 + 2] = z;
+
+                originalPositions[i * 3] = x;
+                originalPositions[i * 3 + 1] = y;
+                originalPositions[i * 3 + 2] = z;
+
+                // Mix of main color and bright color
+                const mixFactor = Math.random();
+                const particleColor = color.clone().lerp(brightColor, mixFactor);
+
+                colors[i * 3] = particleColor.r;
+                colors[i * 3 + 1] = particleColor.g;
+                colors[i * 3 + 2] = particleColor.b;
+
+                sizes[i] = 0.25 + Math.random() * 0.35;
+            }
+
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+            // Custom shader for SUPER glowing particles
+            const material = new THREE.ShaderMaterial({
+                uniforms: {
+                    uTime: { value: 0 },
+                    uExplode: { value: 0 },
+                    uGlow: { value: 2.5 }
+                },
+                vertexShader: `
+                    attribute float size;
+                    varying vec3 vColor;
+                    uniform float uTime;
+                    uniform float uExplode;
+
+                    void main() {
+                        vColor = color;
+                        vec3 pos = position;
+
+                        // Add subtle floating motion
+                        pos += normal * sin(uTime * 2.0 + position.x * 3.0) * 0.15 * (1.0 - uExplode);
+
+                        vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+                        gl_PointSize = size * (250.0 / -mvPosition.z) * (1.0 + uExplode * 0.5);
+                        gl_Position = projectionMatrix * mvPosition;
+                    }
+                `,
+                fragmentShader: `
+                    varying vec3 vColor;
+                    uniform float uGlow;
+
+                    void main() {
+                        float dist = length(gl_PointCoord - vec2(0.5));
+                        if (dist > 0.5) discard;
+
+                        float alpha = 1.0 - smoothstep(0.0, 0.5, dist);
+                        // Extra bright glow
+                        vec3 glow = vColor * uGlow * (1.5 + (1.0 - dist * 2.0) * 1.0);
+
+                        gl_FragColor = vec4(glow, alpha);
+                    }
+                `,
+                transparent: true,
+                vertexColors: true,
+                blending: THREE.AdditiveBlending,
+                depthWrite: false
+            });
+
+            // Compute normals for the explosion direction
+            geometry.computeVertexNormals();
+            const normals = new Float32Array(particleCount * 3);
+            for (let i = 0; i < particleCount; i++) {
+                const x = originalPositions[i * 3];
+                const y = originalPositions[i * 3 + 1];
+                const z = originalPositions[i * 3 + 2];
+                const len = Math.sqrt(x*x + y*y + z*z);
+                normals[i * 3] = x / len;
+                normals[i * 3 + 1] = y / len;
+                normals[i * 3 + 2] = z / len;
+            }
+            geometry.setAttribute('normal', new THREE.BufferAttribute(normals, 3));
+
+            const particles = new THREE.Points(geometry, material);
+            group.add(particles);
+
+            // Add core glow - bigger on desktop, more luminous
+            const coreRadius = window.innerWidth > 768 ? 6 : 4;
+            const coreGeo = new THREE.SphereGeometry(coreRadius, 32, 32);
+            const coreMat = new THREE.MeshBasicMaterial({
+                color: service.color,
+                transparent: true,
+                opacity: 0.35
+            });
+            const core = new THREE.Mesh(coreGeo, coreMat);
+            group.add(core);
+
+            // Add outer glow halo
+            const haloGeo = new THREE.SphereGeometry(radius * 1.3, 32, 32);
+            const haloMat = new THREE.MeshBasicMaterial({
+                color: service.color,
+                transparent: true,
+                opacity: 0.15,
+                side: THREE.BackSide
+            });
+            const halo = new THREE.Mesh(haloGeo, haloMat);
+            group.add(halo);
+
+            // Add invisible clickable sphere (larger for easy clicking)
+            const clickGeo = new THREE.SphereGeometry(radius * 1.5, 16, 16);
+            const clickMat = new THREE.MeshBasicMaterial({
+                transparent: true,
+                opacity: 0,
+                depthWrite: false
+            });
+            const clickSphere = new THREE.Mesh(clickGeo, clickMat);
+            clickSphere.userData = { clickable: true, index: index };
+            group.add(clickSphere);
+
+            group.position.set(0, 0, -50);
+            scene.add(group);
+
+            return {
+                group: group,
+                particles: particles,
+                geometry: geometry,
+                material: material,
+                originalPositions: originalPositions,
+                exploding: false,
+                explodeProgress: 0,
+                reforming: false,
+                velocities: null,
+                service: service
+            };
+        }
+
+        // Explosion and reformation effect
+        function triggerPlanetExplosion(planetIndex) {
+            const planet = particlePlanets[planetIndex];
+            if (!planet || planet.exploding) return;
+
+            planet.exploding = true;
+            planet.explodeProgress = 0;
+
+            // Create random velocities for explosion
+            const count = planet.originalPositions.length / 3;
+            planet.velocities = [];
+
+            for (let i = 0; i < count; i++) {
+                const nx = planet.originalPositions[i * 3];
+                const ny = planet.originalPositions[i * 3 + 1];
+                const nz = planet.originalPositions[i * 3 + 2];
+                const len = Math.sqrt(nx*nx + ny*ny + nz*nz);
+
+                // Explode outward with some randomness
+                planet.velocities.push({
+                    x: (nx / len) * (2 + Math.random() * 3) + (Math.random() - 0.5) * 2,
+                    y: (ny / len) * (2 + Math.random() * 3) + (Math.random() - 0.5) * 2,
+                    z: (nz / len) * (2 + Math.random() * 3) + (Math.random() - 0.5) * 2
+                });
+            }
+
+            // Start reformation after explosion
+            setTimeout(() => {
+                planet.reforming = true;
+            }, 800);
+
+            // Open card after reformation
+            setTimeout(() => {
+                openServiceCard(planet.service.id);
+            }, 400);
+        }
+
+        function updateParticlePlanets() {
+            const time = clock.getElapsedTime();
+
+            particlePlanets.forEach((planet, i) => {
+                // Update shader time
+                planet.material.uniforms.uTime.value = time;
+
+                if (planet.exploding && !planet.reforming) {
+                    // Explosion phase
+                    planet.explodeProgress += 0.08;
+                    planet.material.uniforms.uExplode.value = Math.min(planet.explodeProgress, 1);
+                    planet.material.uniforms.uGlow.value = 1.5;
+
+                    const positions = planet.geometry.attributes.position.array;
+
+                    for (let j = 0; j < planet.velocities.length; j++) {
+                        positions[j * 3] += planet.velocities[j].x * 0.3;
+                        positions[j * 3 + 1] += planet.velocities[j].y * 0.3;
+                        positions[j * 3 + 2] += planet.velocities[j].z * 0.3;
+
+                        // Slow down
+                        planet.velocities[j].x *= 0.92;
+                        planet.velocities[j].y *= 0.92;
+                        planet.velocities[j].z *= 0.92;
+                    }
+
+                    planet.geometry.attributes.position.needsUpdate = true;
+
+                } else if (planet.reforming) {
+                    // Reformation phase - lerp back to original positions
+                    planet.explodeProgress -= 0.03;
+                    planet.material.uniforms.uExplode.value = Math.max(planet.explodeProgress, 0);
+                    planet.material.uniforms.uGlow.value = 1.0 + planet.explodeProgress * 0.5;
+
+                    const positions = planet.geometry.attributes.position.array;
+                    let allBack = true;
+
+                    for (let j = 0; j < planet.originalPositions.length / 3; j++) {
+                        const tx = planet.originalPositions[j * 3];
+                        const ty = planet.originalPositions[j * 3 + 1];
+                        const tz = planet.originalPositions[j * 3 + 2];
+
+                        positions[j * 3] += (tx - positions[j * 3]) * 0.08;
+                        positions[j * 3 + 1] += (ty - positions[j * 3 + 1]) * 0.08;
+                        positions[j * 3 + 2] += (tz - positions[j * 3 + 2]) * 0.08;
+
+                        const dx = positions[j * 3] - tx;
+                        const dy = positions[j * 3 + 1] - ty;
+                        const dz = positions[j * 3 + 2] - tz;
+                        if (Math.sqrt(dx*dx + dy*dy + dz*dz) > 0.1) allBack = false;
+                    }
+
+                    planet.geometry.attributes.position.needsUpdate = true;
+
+                    if (allBack || planet.explodeProgress <= 0) {
+                        planet.exploding = false;
+                        planet.reforming = false;
+                        planet.material.uniforms.uExplode.value = 0;
+                        planet.material.uniforms.uGlow.value = 1.0;
+                    }
+                }
+            });
+        }
+
+
+        function onResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function onMouseMove(e) {
+            mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+            mouse.x = mouseX;
+            mouse.y = mouseY;
+        }
+
+        function onClick(e) {
+            if (hoveredPlanet && !currentOpenCard) {
+                const planetIndex = hoveredPlanet.userData.index;
+                // Trigger particle explosion and reformation
+                triggerPlanetExplosion(planetIndex);
+            }
+        }
+
+        function updateLabels() {
+            servicePlanets.forEach((planet, i) => {
+                const label = labels[i];
+                const pos = planet.position.clone();
+                pos.project(camera);
+
+                const x = (pos.x * 0.5 + 0.5) * window.innerWidth;
+                const y = (-pos.y * 0.5 + 0.5) * window.innerHeight;
+
+                // Check if planet is in front of camera
+                if (pos.z < 1 && planetsVisible) {
+                    label.style.left = x + 'px';
+                    label.style.top = (y + 60) + 'px';
+                    label.classList.add('visible');
+                } else {
+                    label.classList.remove('visible');
+                }
+            });
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const time = clock.getElapsedTime();
+            const scrollProgress = Math.min(scrollY / (window.innerHeight * 2), 1);
+
+            // Camera movement - cinematic depth
+            camera.position.x += (mouseX * 10 - camera.position.x) * 0.03;
+            camera.position.y += (mouseY * 8 - camera.position.y) * 0.03;
+
+            // Only control z with scroll if not moving (opening/closing card)
+            if (!cameraMoving && !currentOpenCard) {
+                camera.position.z = 60 - scrollProgress * 20;
+            }
+            camera.lookAt(0, 0, 0);
+
+
+            // Animate planets - ORBIT WIDE around the edges, never crossing center
+            servicePlanets.forEach((planet, i) => {
+                const service = servicesData[i];
+                const angle = time * service.orbitSpeed + service.orbitOffset;
+
+                // Wide elliptical orbit - planets stay well separated
+                const x = Math.cos(angle) * service.orbitRadius;
+                // Each planet has its own vertical offset + slight wobble
+                const y = Math.sin(angle * 0.2) * 10 + service.yOffset;
+                // Planets at different depths based on their orbit
+                const z = Math.sin(angle) * 30 - 50;
+
+                planet.position.set(x, y, z);
+
+                // Self rotation
+                planet.rotation.y = time * 0.3 + i;
+                planet.rotation.x = Math.sin(time * 0.2 + i) * 0.15;
+
+                // Animate inner objects orbiting
+                if (planet.userData.innerGroup) {
+                    planet.userData.innerGroup.rotation.y = time * 0.8;
+                    planet.userData.innerGroup.rotation.x = time * 0.4;
+
+                    planet.userData.innerGroup.children.forEach(obj => {
+                        obj.rotation.x = time * 2;
+                        obj.rotation.z = time * 1.5;
+                    });
+                }
+            });
+
+            // Update particle planets (explosion/reformation)
+            updateParticlePlanets();
+
+            // Raycasting for hover
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(servicePlanets, true);
+
+            if (intersects.length > 0) {
+                let planetGroup = intersects[0].object;
+                while (planetGroup.parent && !planetGroup.userData.service) {
+                    planetGroup = planetGroup.parent;
+                }
+                if (planetGroup.userData.service) {
+                    document.body.style.cursor = 'pointer';
+
+                    // Spatter effect on hover - spread particles
+                    if (hoveredPlanet !== planetGroup) {
+                        hoveredPlanet = planetGroup;
+                        const planetIndex = planetGroup.userData.index;
+                        const planet = particlePlanets[planetIndex];
+                        if (planet && !planet.exploding) {
+                            planet.material.uniforms.uGlow.value = 3.5;
+                            // Slight spread on hover
+                            const positions = planet.geometry.attributes.position.array;
+                            for (let j = 0; j < planet.originalPositions.length / 3; j++) {
+                                const ox = planet.originalPositions[j * 3];
+                                const oy = planet.originalPositions[j * 3 + 1];
+                                const oz = planet.originalPositions[j * 3 + 2];
+                                const spread = 1.15;
+                                positions[j * 3] = ox * spread + (Math.random() - 0.5) * 0.5;
+                                positions[j * 3 + 1] = oy * spread + (Math.random() - 0.5) * 0.5;
+                                positions[j * 3 + 2] = oz * spread + (Math.random() - 0.5) * 0.5;
+                            }
+                            planet.geometry.attributes.position.needsUpdate = true;
+                        }
+                    }
+                }
+            } else {
+                document.body.style.cursor = 'default';
+                // Return particles to original position when not hovering
+                if (hoveredPlanet) {
+                    const planetIndex = hoveredPlanet.userData.index;
+                    const planet = particlePlanets[planetIndex];
+                    if (planet && !planet.exploding) {
+                        planet.material.uniforms.uGlow.value = 2.5;
+                        const positions = planet.geometry.attributes.position.array;
+                        for (let j = 0; j < planet.originalPositions.length / 3; j++) {
+                            positions[j * 3] = planet.originalPositions[j * 3];
+                            positions[j * 3 + 1] = planet.originalPositions[j * 3 + 1];
+                            positions[j * 3 + 2] = planet.originalPositions[j * 3 + 2];
+                        }
+                        planet.geometry.attributes.position.needsUpdate = true;
+                    }
+                }
+                hoveredPlanet = null;
+            }
+
+            updateLabels();
+            renderer.render(scene, camera);
+        }
+
+        // Warp effect
+        function createWarpEffect() {
+            warpOverlay.innerHTML = '';
+            warpOverlay.classList.add('active');
+
+            for (let i = 0; i < 80; i++) {
+                const line = document.createElement('div');
+                line.className = 'warp-line';
+                line.style.left = Math.random() * 100 + '%';
+                line.style.animationDelay = Math.random() * 0.3 + 's';
+                warpOverlay.appendChild(line);
+            }
+
+            setTimeout(() => warpOverlay.classList.remove('active'), 800);
+        }
+
+        let cameraTargetZ = 60;
+        let cameraMoving = false;
+        let warpIntensity = 0;
+
+        function openServiceCard(serviceId) {
+            const card = document.getElementById('card-' + serviceId);
+            if (card) {
+                // Activate hyperspace jump!
+                activateHyperspace();
+                createWarpEffect();
+
+                // Fly forward into space - deep dive
+                cameraMoving = true;
+                gsap.to(camera.position, {
+                    z: 5,
+                    duration: 1.2,
+                    ease: 'power4.in',
+                    onComplete: () => { cameraMoving = false; }
+                });
+
+                // Camera shake for impact
+                gsap.to(camera.rotation, {
+                    x: -0.15,
+                    duration: 0.8,
+                    ease: 'power2.out'
+                });
+
+                setTimeout(() => {
+                    card.classList.add('active');
+                    currentOpenCard = card;
+                    labels.forEach(l => l.classList.remove('visible'));
+                }, 800);
+            }
+        }
+
+        function closeServiceCard() {
+            if (currentOpenCard) {
+                currentOpenCard.classList.remove('active');
+                currentOpenCard = null;
+
+                // Reverse warp effect
+                gsap.to({ val: 0 }, {
+                    val: 0.5,
+                    duration: 0.3,
+                    ease: 'power2.in',
+                    onUpdate: function() { warpIntensity = this.targets()[0].val; }
+                });
+                gsap.to({ val: 0.5 }, {
+                    val: 0,
+                    duration: 0.5,
+                    delay: 0.3,
+                    ease: 'power2.out',
+                    onUpdate: function() { warpIntensity = this.targets()[0].val; }
+                });
+
+                // Fly backward out of space
+                cameraMoving = true;
+                gsap.to(camera.position, {
+                    z: 60,
+                    duration: 1.2,
+                    ease: 'power2.out',
+                    onComplete: () => { cameraMoving = false; }
+                });
+
+                // Reset camera rotation
+                gsap.to(camera.rotation, {
+                    x: 0,
+                    duration: 1,
+                    ease: 'power2.out'
+                });
+            }
+        }
+
+        // Label click handlers
+        labels.forEach((label, index) => {
+            label.addEventListener('click', () => {
+                triggerPlanetExplosion(index);
+            });
+        });
+
+        document.querySelectorAll('.space-card-close').forEach(btn => {
+            btn.addEventListener('click', closeServiceCard);
+        });
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') closeServiceCard();
+        });
+
+        function initGSAP() {
+            gsap.registerPlugin(ScrollTrigger);
+
+            gsap.to('.page-hero h1', {
+                opacity: 1, z: 0, scale: 1,
+                duration: 2, delay: 0.5, ease: 'power4.out'
+            });
+
+            gsap.to('.page-hero p', {
+                opacity: 1, y: 0,
+                duration: 1.5, delay: 1, ease: 'power3.out'
+            });
+
+            gsap.to('.scroll-indicator', {
+                opacity: 1, duration: 1, delay: 2
+            });
+
+            // Show planets after intro
+            setTimeout(() => {
+                planetsVisible = true;
+            }, 2000);
+
+            ScrollTrigger.create({
+                trigger: '.cta-section',
+                start: 'top 60%',
+                onEnter: () => { planetsVisible = false; labels.forEach(l => l.classList.remove('visible')); },
+                onLeaveBack: () => { planetsVisible = true; }
+            });
+
+            gsap.to('.cta-section h2', {
+                scrollTrigger: { trigger: '.cta-section', start: 'top 70%' },
+                opacity: 1, y: 0, duration: 1, ease: 'power3.out'
+            });
+            gsap.to('.cta-section p', {
+                scrollTrigger: { trigger: '.cta-section', start: 'top 70%' },
+                opacity: 1, y: 0, duration: 1, delay: 0.2, ease: 'power3.out'
+            });
+            gsap.to('.cta-section .btn', {
+                scrollTrigger: { trigger: '.cta-section', start: 'top 70%' },
+                opacity: 1, y: 0, duration: 1, delay: 0.4, ease: 'power3.out'
+            });
+        }
+
+        // Floating SEO keywords animation
+        const seoWords = document.querySelectorAll('.seo-word');
+        const floatingKeywords = document.getElementById('floatingKeywords');
+
+        // Position words in center area (between hero and CTA)
+        seoWords.forEach((word, i) => {
+            // Position more towards center of screen
+            const startX = 15 + Math.random() * 70; // 15-85%
+            const startY = 25 + Math.random() * 50; // 25-75% (center vertical)
+            word.style.left = startX + '%';
+            word.style.top = startY + '%';
+
+            // Animate each word in a floating orbit
+            gsap.to(word, {
+                x: () => Math.sin(i * 0.5) * 80,
+                y: () => Math.cos(i * 0.7) * 40,
+                duration: 12 + i * 1.5,
+                repeat: -1,
+                yoyo: true,
+                ease: 'sine.inOut'
+            });
+        });
+
+        // Show/hide words based on scroll - appear after "Scorri" and stay until bottom
+        function updateFloatingWords() {
+            const scrollY = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const startShow = windowHeight * 0.3;
+
+            seoWords.forEach((word, i) => {
+                // Stagger appearance - stay visible once shown
+                const wordStart = startShow + (i * 30);
+
+                if (scrollY > wordStart) {
+                    word.classList.add('visible');
+                } else {
+                    word.classList.remove('visible');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateFloatingWords);
+
+        // Hamburger menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        init();
+    </script>
+</body>
+</html>

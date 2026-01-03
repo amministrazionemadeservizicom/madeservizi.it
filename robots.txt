@@ -1,0 +1,22 @@
+# Robots.txt for madeservizi.it
+# https://www.robotstxt.org/
+
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://madeservizi.it/sitemap.xml
+
+# Crawl delay (optional, be nice to servers)
+Crawl-delay: 1
+
+# Block common unwanted paths (if any exist in the future)
+Disallow: /admin/
+Disallow: /private/
+Disallow: /*.json$
+
+# Allow important resources for rendering
+Allow: /css/
+Allow: /js/
+Allow: /img/

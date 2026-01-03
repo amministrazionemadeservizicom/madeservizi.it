@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulenti Luce e Gas | MADE Servizi</title>
+    <meta name="description" content="Confrontiamo le migliori offerte luce e gas per farti risparmiare sulle bollette.">
+    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+    <meta name="theme-color" content="#F2C927">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{--bg:#F2C927;--text:#1a1a1a;--text-dim:#4a4a4a;--white:#fff}
+        body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+        nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 3rem;display:flex;justify-content:space-between;align-items:center;background:var(--bg);height:80px}
+        .logo img{height:80px;width:auto;filter:invert(1);transition:transform 0.3s}
+        .logo:hover img{transform:scale(1.05)}
+        .nav-links{display:flex;gap:2.5rem;list-style:none}
+        .nav-links a{color:var(--text);text-decoration:none;font-weight:700;opacity:0.8;transition:0.3s}
+        .nav-links a:hover{opacity:1}
+        .nav-cta{padding:0.75rem 1.5rem;background:var(--text);color:var(--bg);text-decoration:none;font-weight:700;border-radius:50px}
+        .page-hero{min-height:60vh;display:flex;align-items:center;justify-content:center;padding:10rem 2rem 4rem;text-align:center}
+        .page-hero h1{font-size:clamp(2.5rem,6vw,4rem);font-weight:700;margin-bottom:1rem}
+        .page-hero p{font-size:1.2rem;color:var(--text-dim);max-width:600px;margin:0 auto 2rem}
+        .btn{display:inline-flex;padding:1rem 2rem;background:var(--text);color:var(--bg);text-decoration:none;font-weight:700;border-radius:12px;transition:0.3s}
+        .btn:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,0.2)}
+        .content{padding:4rem 2rem;max-width:1000px;margin:0 auto}
+        .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-bottom:4rem}
+        .feature{background:var(--white);padding:2rem;border-radius:20px;text-align:center}
+        .feature-icon{font-size:3rem;margin-bottom:1rem}
+        .feature h3{font-size:1.25rem;margin-bottom:0.5rem}
+        .feature p{color:var(--text-dim);font-size:0.95rem}
+        .cta-box{background:var(--text);color:var(--white);padding:3rem;border-radius:24px;text-align:center}
+        .cta-box h2{font-size:2rem;margin-bottom:1rem}
+        .cta-box p{opacity:0.8;margin-bottom:2rem}
+        .cta-box .btn{background:var(--bg);color:var(--text)}
+        footer{padding:2rem;text-align:center;color:var(--text-dim);font-size:0.85rem;border-top:1px solid rgba(0,0,0,0.1)}
+        /* Hamburger Menu */
+        .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:10px;z-index:200}
+        .hamburger span{width:25px;height:3px;background:var(--text);border-radius:3px;transition:0.3s}
+        .hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,6px)}
+        .hamburger.active span:nth-child(2){opacity:0}
+        .hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-6px)}
+        .mobile-menu{position:fixed;top:0;left:0;width:100%;height:100vh;background:rgba(242,201,39,0.98);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;z-index:150;opacity:0;pointer-events:none;transition:0.4s}
+        .mobile-menu.active{opacity:1;pointer-events:auto}
+        .mobile-menu a{font-size:1.5rem;color:var(--text);text-decoration:none;font-weight:700;transition:0.3s}
+        .mobile-menu a:hover{opacity:0.7}
+        @media(max-width:768px){nav{padding:1rem 1.5rem}.logo img{height:70px}.nav-links,.nav-cta{display:none}.hamburger{display:flex}}
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="../index.html" class="logo"><img src="../img/logo.svg" alt="MADE Servizi"></a>
+        <ul class="nav-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="servizi.html">Servizi</a></li>
+            <li><a href="chi-siamo.html">Chi Siamo</a></li>
+            <li><a href="lavora-con-noi.html">Lavora con Noi</a></li>
+            <li><a href="contatti.html">Contatti</a></li>
+        </ul>
+        <a href="contatti.html" class="nav-cta">Contattaci</a>
+        <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="../index.html">Home</a>
+        <a href="servizi.html">Servizi</a>
+        <a href="chi-siamo.html">Chi Siamo</a>
+        <a href="lavora-con-noi.html">Lavora con Noi</a>
+        <a href="contatti.html">Contatti</a>
+    </div>
+
+    <section class="page-hero">
+        <div>
+            <h1>Consulenti Luce e Gas</h1>
+            <p>Confrontiamo le migliori offerte del mercato e ti aiutiamo a risparmiare sulle bollette energetiche.</p>
+            <a href="contatti.html" class="btn">Richiedi Consulenza</a>
+        </div>
+    </section>
+
+    <div class="content">
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <h3>Confronto Offerte</h3>
+                <p>Analizziamo tutte le tariffe disponibili per trovare quella perfetta per te.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">💰</div>
+                <h3>Risparmio Garantito</h3>
+                <p>I nostri clienti risparmiano in media il 25% sulle bollette.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📋</div>
+                <h3>Gestione Pratiche</h3>
+                <p>Ci occupiamo di tutta la burocrazia per il cambio fornitore.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🤝</div>
+                <h3>Consulenza Gratuita</h3>
+                <p>Analisi delle tue bollette senza alcun costo o impegno.</p>
+            </div>
+        </div>
+
+        <div class="cta-box">
+            <h2>Inizia a Risparmiare Oggi</h2>
+            <p>Inviaci una bolletta e ti diremo quanto puoi risparmiare.</p>
+            <a href="contatti.html" class="btn">Contattaci Ora</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 MADE Servizi. Tutti i diritti riservati.</p>
+    </footer>
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
