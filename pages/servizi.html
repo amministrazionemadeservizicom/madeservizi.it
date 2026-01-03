@@ -986,51 +986,6 @@
                 // Update shader time
                 planet.material.uniforms.uTime.value = time;
 
-                // PULSING EFFECT - make planets throb like they're about to explode
-                if (!planet.exploding && !planet.reforming && hoveredPlanet !== planet.group) {
-                    // Each planet pulses at slightly different speed
-                    const pulseSpeed = 3 + i * 0.4;
-                    const pulse = Math.sin(time * pulseSpeed) * 0.5 + 0.5; // 0 to 1
-                    const fastPulse = Math.sin(time * pulseSpeed * 2) * 0.5 + 0.5; // faster pulse
-
-                    // Glow pulsing - dramatic brightness changes
-                    planet.material.uniforms.uGlow.value = 2.5 + pulse * 2.5;
-
-                    // Scale pulsing - planets grow and shrink more dramatically
-                    const scale = 1 + pulse * 0.25;
-                    planet.group.scale.set(scale, scale, scale);
-
-                    // PARTICLE SPREADING - particles expand outward during pulse
-                    const positions = planet.geometry.attributes.position.array;
-                    const spreadFactor = 1 + fastPulse * 0.3; // particles spread 30% outward
-
-                    for (let j = 0; j < planet.originalPositions.length / 3; j++) {
-                        const ox = planet.originalPositions[j * 3];
-                        const oy = planet.originalPositions[j * 3 + 1];
-                        const oz = planet.originalPositions[j * 3 + 2];
-
-                        // Add some jitter/vibration for unstable effect
-                        const jitter = Math.sin(time * 10 + j) * 0.2;
-
-                        positions[j * 3] = ox * spreadFactor + jitter;
-                        positions[j * 3 + 1] = oy * spreadFactor + jitter;
-                        positions[j * 3 + 2] = oz * spreadFactor + jitter;
-                    }
-                    planet.geometry.attributes.position.needsUpdate = true;
-
-                    // Also pulse the core and halo opacity
-                    const core = planet.group.children[1]; // core mesh
-                    const halo = planet.group.children[2]; // halo mesh
-                    if (core && core.material) {
-                        core.material.opacity = 0.3 + pulse * 0.4;
-                    }
-                    if (halo && halo.material) {
-                        halo.material.opacity = 0.15 + pulse * 0.25;
-                        // Halo also scales with pulse
-                        halo.scale.set(1 + pulse * 0.2, 1 + pulse * 0.2, 1 + pulse * 0.2);
-                    }
-                }
-
                 if (planet.exploding && !planet.reforming) {
                     // Explosion phase
                     planet.explodeProgress += 0.08;
@@ -1445,6 +1400,89 @@
         });
 
         init();
+
+        // ============================================
+        // AUTO-CAROUSEL: Auto-open cards with space travel
+        // ============================================
+        let autoCarouselActive = true;
+        let autoCarouselIndex = 0;
+        let autoCarouselTimeout = null;
+        let userInteracted = false;
+        const AUTO_OPEN_DELAY = 5000; // 5 seconds between cards
+        const RESUME_DELAY = 10000; // 10 seconds after interaction to resume
+
+        function startAutoCarousel() {
+            if (!autoCarouselActive || currentOpenCard) return;
+
+            // Wait for planets to be visible first
+            if (!planetsVisible) {
+                autoCarouselTimeout = setTimeout(startAutoCarousel, 1000);
+                return;
+            }
+
+            // Open next planet card
+            const serviceIds = ['luce-gas', 'fotovoltaico', 'digital', 'noleggio-auto', 'telefonia', 'semplicom'];
+            const serviceId = serviceIds[autoCarouselIndex];
+
+            triggerPlanetExplosion(autoCarouselIndex);
+
+            // Schedule next card
+            autoCarouselTimeout = setTimeout(() => {
+                if (currentOpenCard && autoCarouselActive && !userInteracted) {
+                    closeServiceCard();
+                    setTimeout(() => {
+                        autoCarouselIndex = (autoCarouselIndex + 1) % serviceIds.length;
+                        startAutoCarousel();
+                    }, 1500);
+                }
+            }, AUTO_OPEN_DELAY);
+        }
+
+        function stopAutoCarousel() {
+            userInteracted = true;
+            autoCarouselActive = false;
+            if (autoCarouselTimeout) {
+                clearTimeout(autoCarouselTimeout);
+                autoCarouselTimeout = null;
+            }
+
+            // Close any open card and return to orbiting
+            if (currentOpenCard) {
+                closeServiceCard();
+            }
+
+            // Resume auto-carousel after 10 seconds of no interaction
+            setTimeout(() => {
+                userInteracted = false;
+                autoCarouselActive = true;
+                startAutoCarousel();
+            }, RESUME_DELAY);
+        }
+
+        // Detect user interaction to stop carousel
+        document.addEventListener('click', (e) => {
+            // Don't stop if clicking on card buttons
+            if (e.target.closest('.space-card') || e.target.closest('.planet-label-3d')) {
+                return;
+            }
+            if (autoCarouselActive && currentOpenCard) {
+                stopAutoCarousel();
+            }
+        });
+
+        document.addEventListener('touchstart', (e) => {
+            if (e.target.closest('.space-card') || e.target.closest('.planet-label-3d')) {
+                return;
+            }
+            if (autoCarouselActive && currentOpenCard) {
+                stopAutoCarousel();
+            }
+        });
+
+        // Start auto-carousel after page loads
+        setTimeout(() => {
+            startAutoCarousel();
+        }, 3000);
     </script>
 </body>
 </html>
