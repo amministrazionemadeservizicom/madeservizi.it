@@ -1,0 +1,6 @@
+# Redirect old pages to new structure (301 permanent redirect)
+/pages/efficienza-energetica.html /pages/fotovoltaico.html 301
+/pages/famiglie.html /pages/servizi.html 301
+/pages/imprese.html /pages/servizi.html 301
+/pages/pubblica-amministrazione.html /pages/servizi.html 301
+/pages/reddito-energetico.html /pages/fotovoltaico.html 301
